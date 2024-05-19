@@ -39,13 +39,13 @@ mount /dev/sda1 /mnt/efi
 
 # Install essential packages
 echo "Installing essential packages..."
-pacstrap /mnt base linux linux-firmware vim networkmanager grub efibootmgr xrdp git
+pacstrap /mnt base linux linux-firmware vim networkmanager grub efibootmgr xrdp git || { echo "Failed to install essential packages"; exit 1; }
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Chroot and configure the system
-arch-chroot /mnt /bin/bash -e <<EOF
+if ! arch-chroot /mnt /bin/bash -e <<EOF
 
 # Timezone and locale
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
@@ -71,6 +71,10 @@ grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 EOF
+then
+    echo "Failed to configure chroot environment."
+    exit 1
+fi
 
 # Create second-stage script for user setup
 cat > /mnt/root/second_stage.sh <<'EOSTAGE'
@@ -132,7 +136,5 @@ EOF
 # Enable the firstboot service
 arch-chroot /mnt systemctl enable firstboot.service
 
-# Unmount partitions and reboot
-umount -R /mnt
-echo "Setup complete. Rebooting..."
-reboot
+# Prompt user to manually reboot
+echo "Setup complete. Please reboot manually to continue."

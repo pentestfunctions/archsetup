@@ -70,9 +70,6 @@ echo root:password | chpasswd
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Enable SSH for remote access (optional)
-systemctl enable sshd.service
-
 EOF
 
 # Create second-stage script for user setup
@@ -92,6 +89,9 @@ echo username:password | chpasswd
 # Enable sudo for the user
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
+# Disable the firstboot service so it doesn't run again
+systemctl disable firstboot.service
+
 EOSTAGE
 
 chmod +x /mnt/root/second_stage.sh
@@ -101,6 +101,7 @@ cat > /mnt/etc/systemd/system/firstboot.service <<'EOF'
 [Unit]
 Description=First Boot Script
 After=network.target
+Before=getty@tty1.service
 
 [Service]
 Type=oneshot

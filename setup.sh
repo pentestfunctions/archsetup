@@ -39,7 +39,7 @@ mount /dev/sda1 /mnt/efi
 
 # Install essential packages
 echo "Installing essential packages..."
-pacstrap /mnt base linux linux-firmware vim networkmanager grub efibootmgr
+pacstrap /mnt base linux linux-firmware vim networkmanager grub efibootmgr xrdp git
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -79,7 +79,9 @@ cat > /mnt/root/second_stage.sh <<'EOSTAGE'
 # Install XFCE4 and LightDM
 pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
 
-# Enable LightDM
+# Enable and configure automatic login for LightDM
+sed -i 's/#autologin-user=/autologin-user=username/' /etc/lightdm/lightdm.conf
+sed -i 's/#autologin-session=/autologin-session=xfce/' /etc/lightdm/lightdm.conf
 systemctl enable lightdm.service
 
 # Add a regular user with password
@@ -88,6 +90,20 @@ echo username:password | chpasswd
 
 # Enable sudo for the user
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+
+# Install and configure Enhanced Session Mode
+git clone https://github.com/Microsoft/linux-vm-tools /opt/linux-vm-tools
+cd /opt/linux-vm-tools/arch
+./makepkg.sh
+./install-config.sh
+
+# Configure .xinitrc for xrdp session
+echo "exec startxfce4" > /home/username/.xinitrc
+chown username:username /home/username/.xinitrc
+
+# Start and enable xrdp service
+systemctl enable xrdp
+systemctl start xrdp
 
 # Disable the firstboot service so it doesn't run again
 systemctl disable firstboot.service

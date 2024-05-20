@@ -6,27 +6,6 @@ if [ "$(id -u)" -eq 0 ]; then
   exit 1
 fi
 
-rm -rf /etc/pacman.d/gpg/ 2>/dev/null
-rm -rf /etc/pacman.d/gnupg/ 2>/dev/null
-rm -rf .gnupg 2>/dev/null
-dirmngr</dev/null
-sudo pacman-key --init
-sudo pacman -Sy archlinux-keyring --noconfirm
-sudo pacman-key --populate
-# sudo pacman-key --refresh-keys
-sudo pacman -Scc --noconfirm
-sudo pacman -Syyu --noconfirm
-sudo pacman-key --init
-sudo pacman -Sy
-sudo pacman-key --init
-sudo pacman -Sy archlinux-keyring --noconfirm
-sudo pacman -S git base-devel fakeroot binutils --needed --noconfirm
-cd /tmp
-sudo -u username git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-
-
 # Setting a new wallpaper for Xfce
 install_wallpaper_settings() {
     cd "$initial_dir"

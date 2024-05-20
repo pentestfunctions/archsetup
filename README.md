@@ -14,16 +14,14 @@ This guide will help you set up an Arch Linux virtual machine on Hyper-V with en
 First, create an Arch Linux VM in Hyper-V. Refer to the images in the `readme_images` folder for visual guidance:
 
 1. **Quick Create** ✨
+
    ![Quick Create](resources/readme_images/quick_create.png)
    Use the Quick Create feature in Hyper-V to create a new VM.
 
-2. **RAM Allocation** 🧠
+3. **RAM Allocation** 🧠
+
    ![RAM Allocation](resources/readme_images/ram.png)
    Allocate the desired amount of RAM to your VM.
-
-3. **First Boot** 🚀
-   ![First Boot](resources/readme_images/first_boot.png)
-   Boot the VM for the first time and proceed with the Arch Linux installation.
 
 ### 2. Pre-Boot Configuration ⚙️
 Before booting the VM, enable host support for enhanced session mode:
@@ -32,6 +30,11 @@ Before booting the VM, enable host support for enhanced session mode:
 Set-VM -VMName "ArchLinux" -EnhancedSessionTransportType HvSocket
 ```
 Replace `"ArchLinux"` with the name of your VM.
+
+**First Boot** 🚀
+   
+   ![First Boot](resources/readme_images/first_boot.png)
+   Boot the VM for the first time and proceed with the Arch Linux installation.
 
 ### 3. Initial Setup 🏁
 Run the initial setup script to install Arch Linux:

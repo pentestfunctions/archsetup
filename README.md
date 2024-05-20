@@ -40,7 +40,9 @@ Replace `"ArchLinux"` with the name of your VM.
 Run the initial setup script to install Arch Linux:
 
 ```bash
-curl https://raw.githubusercontent.com/pentestfunctions/archsetup/main/setup.sh | sh
+curl https://raw.githubusercontent.com/pentestfunctions/archsetup/main/setup.sh > setup.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
 This script will install Arch Linux and reboot the VM.

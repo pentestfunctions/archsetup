@@ -63,4 +63,6 @@ sudo chmod +x /usr/lib/hyperv/kvp_scripts/hv_get_dns_info
 
 sudo systemctl restart hv_kvp_daemon
 
+sudo cp resources/xrdp.ini /etc/xrdp/xrdp.ini
+
 echo "Setup complete!"

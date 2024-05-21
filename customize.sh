@@ -15,7 +15,6 @@ install_wallpaper_settings() {
     sudo cp resources/background.jpg ~/Pictures/background.jpg
     sudo cp resources/background.bmp /etc/background.bmp
     sudo cp resources/background2.jpg ~/Pictures/background2.jpg
-    sudo mv resources/xrdp.ini /etc/xrdp/xrdp.ini
     xfconf-query -c xfce4-desktop -l -v | grep image-path | grep -oE '^/[^ ]+' | xargs -I % xfconf-query -c xfce4-desktop -p % -s ~/Pictures/background2.jpg
     xfconf-query -c xfce4-desktop -l -v | grep last-image | grep -oE '^/[^ ]+' | xargs -I % xfconf-query -c xfce4-desktop -p % -s ~/Pictures/background2.jpg
 }

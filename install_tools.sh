@@ -55,12 +55,6 @@ if ! command -v yay &> /dev/null; then
     exit 1
 fi
 
-# Add the directory where wpscan is installed to PATH
-export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
-
-# Install wpscan separately as it uses gem
-install_tool "wpscan" "gem install wpscan" "$HOME/.local/share/gem/ruby/3.0.0/bin/wpscan"
-
 # Define yay packages and install them
 yay_packages=(
     lolcat
@@ -211,3 +205,10 @@ for package in "${yay_packages[@]}"; do
         fi
     fi
 done
+
+
+# Add the directory where wpscan is installed to PATH
+export PATH=$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin
+
+# Install wpscan separately as it uses gem
+install_tool "wpscan" "gem install wpscan" "$HOME/.local/share/gem/ruby/3.0.0/bin/wpscan"

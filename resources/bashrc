@@ -108,10 +108,10 @@ if ! shopt -oq posix; then
 fi
 
 
-hacktricks() { brave-browser "https://book.hacktricks.xyz"; sleep 2; clear; }
-youtube() { brave-browser "https:/youtube.com"; sleep 2; clear; }
-tryhackme() { brave-browser "https://tryhackme.com"; sleep 2; clear; }
-ipinfo() { brave-browser "https://shodan.io/"; brave-browser "https://search.censys.io/"; sleep 2; clear; }
+hacktricks() { brave "https://book.hacktricks.xyz"; sleep 2; clear; }
+youtube() { brave "https:/youtube.com"; sleep 2; clear; }
+tryhackme() { brave "https://tryhackme.com"; sleep 2; clear; }
+ipinfo() { brave "https://shodan.io/"; brave-browser "https://search.censys.io/"; sleep 2; clear; }
 
 process() {
   if [ -z "$1" ]; then
@@ -134,7 +134,7 @@ hacknexus() {
 	echo "Usage: hacknexus -u <domain>"
 	return 1
     fi
-    dirsearch "$@"
+    feroxbuster "$@"
 }
 
 escalation() {

@@ -13,7 +13,9 @@ install_wallpaper_settings() {
     cd "$initial_dir"
     mkdir -p ~/Pictures
     sudo cp resources/background.jpg ~/Pictures/background.jpg
+    sudo cp resources/background.bmp /etc/background.bmp
     sudo cp resources/background2.jpg ~/Pictures/background2.jpg
+    sudo mv resources/xrdp.ini /etc/xrdp/xrdp.ini
     xfconf-query -c xfce4-desktop -l -v | grep image-path | grep -oE '^/[^ ]+' | xargs -I % xfconf-query -c xfce4-desktop -p % -s ~/Pictures/background2.jpg
     xfconf-query -c xfce4-desktop -l -v | grep last-image | grep -oE '^/[^ ]+' | xargs -I % xfconf-query -c xfce4-desktop -p % -s ~/Pictures/background2.jpg
 }
@@ -21,9 +23,8 @@ install_wallpaper_settings() {
 # Configure our terminal settings
 function terminal_transparency() {
     cd "$initial_dir"
-    cp resources/terminalrc ~/.config/xfce4/terminal/terminalrc
     mkdir -p ~/.config/xfce4/terminal
-    touch ~/.config/xfce4/terminal/terminalrc
+    cp resources/terminalrc ~/.config/xfce4/terminal/terminalrc
 }
 
 add_panel_items() {
@@ -69,4 +70,3 @@ sudo cp resources/xfce4-panel-settings.tar.gz /tmp/
 tar -xzf /tmp/xfce4-panel-settings.tar.gz -C ~/.config/xfce4/panel
 source ~/.bashrc
 install_dracula_theme
-yay -S nano lolcat --noconfirm

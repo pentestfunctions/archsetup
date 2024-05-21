@@ -88,7 +88,17 @@ Finally, install essential tools and applications:
 yay -S nano lolcat brave --noconfirm
 ```
 
+### 7. Install my toolset or you can install your own 🧰
+After the tools are installed, you can rerun this script and everything should be green.
+
+```bash
+chmod +x install_tools.sh
+./install_tools.sh
+```
 Close and relaunch your terminal to apply transparency settings if configured.
 
-## Conclusion 🎉
+## WoooHooo! 🎉
 Your Arch Linux VM on Hyper-V is now set up with enhanced session mode and customized settings. You can start installing and configuring additional tools as per your requirements. Enjoy your new Arch Linux environment! 🚀
+
+![Finito](resources/readme_images/All_Setup.gif)
+

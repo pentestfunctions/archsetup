@@ -16,6 +16,32 @@ if ! ping -c 3 google.com; then
     exit 1
 fi
 
+# Prompt for a valid username
+while true; do
+    read -p "Enter a username: " username
+
+    # Check if the username is valid
+    if [[ "$username" =~ ^[a-z_][a-z0-9_-]{2,15}$ ]]; then
+        echo "Username '$username' is valid and can be used."
+        break
+    else
+        echo "Invalid username. It must start with a lowercase letter or underscore, can contain lowercase letters, digits, underscores, and hyphens, and be between 3 to 16 characters long."
+    fi
+done
+
+# Prompt for a valid hostname
+while true; do
+    read -p "Enter a hostname: " hostname
+
+    # Check if the hostname is valid
+    if [[ "$hostname" =~ ^[a-zA-Z0-9][a-zA-Z0-9-]{0,62}[a-zA-Z0-9]$ ]]; then
+        echo "Hostname '$hostname' is valid and can be used."
+        break
+    else
+        echo "Invalid hostname. It must start and end with a letter or digit, can contain letters, digits, and hyphens, and be between 1 to 63 characters long."
+    fi
+done
+
 # Update system clock
 timedatectl set-ntp true
 
@@ -55,11 +81,11 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # Network configuration
-echo "myhostname" > /etc/hostname
+echo "$hostname" > /etc/hostname
 {
     echo "127.0.0.1 localhost"
     echo "::1       localhost"
-    echo "127.0.1.1 myhostname.localdomain myhostname"
+    echo "127.0.1.1 $hostname.localdomain $hostname"
 } >> /etc/hosts
 systemctl enable NetworkManager
 
@@ -67,8 +93,8 @@ systemctl enable NetworkManager
 echo root:password | chpasswd
 
 # Create the user and configure automatic login
-useradd -m -G wheel -s /bin/bash username
-echo username:password | chpasswd
+useradd -m -G wheel -s /bin/bash $username
+echo $username:password | chpasswd
 
 # Configure sudoers for passwordless sudo for the wheel group
 if ! grep -q '^%wheel ALL=(ALL) NOPASSWD: ALL' /etc/sudoers; then
@@ -77,7 +103,7 @@ fi
 
 # Set up automatic login for LightDM and the XFCE session
 mkdir -p /etc/lightdm/lightdm.conf.d
-echo -e "[Seat:*]\nautologin-user=username\nautologin-session=xfce" > /etc/lightdm/lightdm.conf.d/20-autologin.conf
+echo -e "[Seat:*]\nautologin-user=$username\nautologin-session=xfce" > /etc/lightdm/lightdm.conf.d/20-autologin.conf
 
 # Enable LightDM to start at boot
 systemctl enable lightdm.service

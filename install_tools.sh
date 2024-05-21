@@ -1,5 +1,14 @@
 #!/bin/bash
 
+add_blackarch_repo() {
+    rm -f strap.sh
+    curl -O https://blackarch.org/strap.sh
+    chmod +x strap.sh
+    sudo ./strap.sh
+}
+
+add_blackarch_repo
+
 # Function to check if a command exists and install it if it doesn't
 install_tool() {
     local tool=$1

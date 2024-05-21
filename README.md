@@ -3,6 +3,7 @@
 
 ## Overview
 This guide will help you set up an Arch Linux virtual machine on Hyper-V with enhanced session mode and custom configurations. Follow the steps below to create, configure, and customize your Arch Linux VM.
+- NOTE: By default right now the root user and your username will use `password` as the default password.
 
 ## Prerequisites
 - Hyper-V installed on your host machine

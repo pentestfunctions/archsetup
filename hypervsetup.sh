@@ -47,4 +47,20 @@ cd linux-vm-tools/arch
 sudo ./install-config.sh
 echo "exec startxfce4" > ~/.xinitrc
 
+sudo tee /usr/lib/hyperv/kvp_scripts/hv_get_dhcp_info > /dev/null <<EOF
+#!/bin/bash
+echo "DHCP info not implemented"
+exit 0
+EOF
+sudo chmod +x /usr/lib/hyperv/kvp_scripts/hv_get_dhcp_info
+
+sudo tee /usr/lib/hyperv/kvp_scripts/hv_get_dns_info > /dev/null <<EOF
+#!/bin/bash
+echo "DNS info not implemented"
+exit 0
+EOF
+sudo chmod +x /usr/lib/hyperv/kvp_scripts/hv_get_dns_info
+
+sudo systemctl restart hv_kvp_daemon
+
 echo "Setup complete!"
